@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scoped CSS Variables and JS</title>
+	<meta property="og:url"           content="https://arvindbalgo.github.io/" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="Scoped CSS Variables and JS" />
+  <meta property="og:description"   content="Scoped CSS Variables and JS" />
+  <meta property="og:image"         content="https://scontent.fmru1-1.fna.fbcdn.net/v/t1.0-9/19510268_10212964155080482_5292843380767200686_n.jpg?_nc_cat=104&_nc_sid=13bebb&_nc_ohc=FiJHvXzAgCoAX87wEO5&_nc_ht=scontent.fmru1-1.fna&oh=1b1bc1b66edb3e42ddd0e38935d3bd1d&oe=5EB3006D" />
+
+</head>
+<body>
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '837125533452746',
+      xfbml      : true,
+      version    : 'v6.0'
+    });
+    FB.AppEvents.logPageView();
+  };
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v6.0&appId=837125533452746&autoLogAppEvents=1"></script>
+<h2>Update CSS variables with <span class="highlight">JS</span></h2>
+<h3 class="highlight">Update css variables by selecting specific dom elements</h3>
+<div class="controls">
+    <div>
+        <label for="spacing">Spacing:</label>
+        <input type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+
+
+        <label for="blur">Blur:</label>
+        <input type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+
+        <label for="base">Base Color:</label>
+        <input type="color" name="base" value="#ffc600">
+    </div>
+	<div style="padding-bottom: 40px">
+		<div
+			class="fb-like"
+			data-share="true"
+			data-width="450"
+			data-show-faces="true">
+		</div>
+		<div class="fb-send" 
+			data-href="https://arvindbalgo.github.io/" 
+			data-layout="button_count">
+		</div>
+	</div>
+    <div>
+        <img src="https://scontent.fmru1-1.fna.fbcdn.net/v/t1.0-9/19510268_10212964155080482_5292843380767200686_n.jpg?_nc_cat=104&_nc_sid=13bebb&_nc_ohc=FiJHvXzAgCoAX87wEO5&_nc_ht=scontent.fmru1-1.fna&oh=1b1bc1b66edb3e42ddd0e38935d3bd1d&oe=5EB3006D">
+    </div>
+</div>
+
+<style>
+    :root {
+        --base: #ffc600;
+        --spacing: 10px;
+        --blur: 10px;
+    }
+
+    img {
+        padding: var(--spacing);
+        background: var(--base);
+        filter: blur(var(--blur));
+    }
+
+    .highlight {
+        color: var(--base);
+    }
+
+    body {
+        text-align: center;
+        background: #193549;
+        color: white;
+        font-family: 'helvetica neue', sans-serif;
+        font-weight: 100;
+        font-size: 50px;
+    }
+
+    .controls {
+        margin-bottom: 50px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    input {
+        width: 100px;
+    }
+</style>
+
+<script>
+    let inputs = document.querySelectorAll('.controls input');
+
+    function handleUpdate() {
+        const suffix = this.dataset.sizing || '';
+        document.querySelector('.controls').style.setProperty(`--${this.name}`, this.value + suffix)
+        document.querySelector('.highlight').style.setProperty(`--${this.name}`, this.value + suffix)
+        document.querySelector('h3').style.setProperty(`--${this.name}`, this.value + suffix)
+    }
+
+    inputs.forEach(input => input.addEventListener('change', handleUpdate))
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate))
+</script>
+</body>
+</html>
